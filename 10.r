@@ -1,26 +1,23 @@
-library(ggplot2)
-library(reshape2)
+df <- data.frame(
+EMPID= c(101,102,103,104,105),
+Name=c("John","peter","bob","Linda","Elizabeth"),
+Age=c(25,30,35,40,45),
+Salary=c(50000,60000,45000,70000,55000),
+Department=c("HR","IT","Finance","Production","QualityControl"))
+df2 <- data.frame(
+EMPID =c(103,104,105),
+Bonus=c(2000,3000,5000)
+)
 
-matrix_A <- matrix(1:9, 3, 3, byrow = TRUE)
-matrix_B <- matrix(9:1, 3, 3, byrow = TRUE)
-
-sum_matrix <- matrix_A + matrix_B
-scaled_matrix <- matrix_A * 2
-transposed_A <- t(matrix_A)
-product_matrix <- matrix_A %*% matrix_B
-
-sum_matrix_A <- sum(matrix_A)
-mean_matrix_B <- mean(matrix_B)
-sd_matrix_B <- sd(matrix_B)
-
-heatmap_plot <- ggplot(melt(matrix_A), aes(Var1, Var2, fill = value)) + 
-  geom_tile() + scale_fill_gradient(low = "yellow", high = "red") + 
-  labs(title = "Heatmap of Matrix A", x = "Column", y = "Row")
-
-barplot_data <- data.frame(Row = paste("Row", 1:3), Sum = rowSums(matrix_B))
-barplot_plot <- ggplot(barplot_data, aes(Row, Sum)) + 
-  geom_bar(stat = "identity", fill = "blue") + 
-  labs(title = "Sums of Rows in Matrix B", x = "Row", y = "Sum")
-
-print(heatmap_plot)
-print(barplot_plot)
+print("Filtered Data:")
+print(df %>% filter(Age>25))
+print("Selected Columns:")
+print(df %>% select(EMPID, Name, Salary))
+print("Mutated Data:")
+print(df %>% mutate(Salary_Adjusted=Salary*1.1))
+print("Summarized Data:")
+print(df %>% group_by(Department) %>% summarize(Avg_salary=mean(Salary), Max_Age=max(Age)))
+print("Arranged Data:")
+print(df %>% arrange(Age, desc(Salary)))
+print("Joined Data:")
+print(left_join(df, df2, by="EMPID"))

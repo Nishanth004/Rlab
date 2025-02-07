@@ -1,6 +1,6 @@
 # Load required libraries
 library(ggplot2)
-#library(reshape2)
+library(reshape2)
 
 # Task 1: Create Matrices
 matrix_A <- matrix(1:9, nrow = 3, byrow = TRUE)  # Matrix A (3x3)
